@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  chrome:
+    image: selenium/standalone-chrome:3.141.59-copernicium
+    ports:
+      - 4444:4444
+      - 4445:4445
+      - 8080:8080
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox:
+    image: selenium/standalone-firefox:3.141.59-copernicium
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - chrome
+    environment:
+      - SE_OPTS=-port 4445
+    network_mode: "service:chrome"
+  
+  flowfetch:
+    build: ./flowfetch
+    command: ./flowfetch
+    volumes: 
+      - ./flowfetch/config.yaml:/go/src/github.com/sharat910/flowfetch/config.yaml
+      - ./data:/go/src/github.com/sharat910/flowfetch/data:rw
+    network_mode: "service:chrome"
+    depends_on: 
+      - chrome
+
+  downloader:
+    build: .
+    command: python -u main.py
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    network_mode: "service:chrome"
+    depends_on: 
+      - flowfetch

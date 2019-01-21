@@ -1,0 +1,24 @@
+browser:
+  chrome_remote_url: 'http://localhost:4444/wd/hub'
+  firefox_remote_url: 'http://localhost:4445/wd/hub'
+  type: 'remote' #local or remote (browser in a container)
+
+downloads:
+  tag: 'downloads-2min'
+  clients: ['chrome','firefox','wget']
+  max_time: 120 #seconds
+  urls:
+    - "https://speed.hetzner.de/10GB.bin"
+    - "http://speedtest-ny.turnkeyinternet.net/10000mb.bin"
+    - "http://speedtest-ca.turnkeyinternet.net/10000mb.bin"
+    - "http://mirror.filearena.net/pub/speed/SpeedTest_2048MB.dat"
+    - "http://ipv4.download.thinkbroadband.com/1GB.zip"
+    - "http://87.76.21.20/test100.zip"
+    - "http://173.249.157.79/test100.zip"
+    - "http://mia.futurehosting.com/test100.zip"
+    - "http://mirror.overthewire.com.au/pub/ubuntu-releases/18.04.1/ubuntu-18.04.1-desktop-amd64.iso"
+
+flowfetch:
+  enable: true 
+  start_url: "http://localhost:8080/start"
+  stop_url: "http://localhost:8080/stop"
